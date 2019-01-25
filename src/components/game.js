@@ -14,16 +14,15 @@ export default class Game extends React.Component {
   this.state={
     guessArray:[],
     isHot: "",
-    correctAnswer: -1,
+    correctAnswer: -999999,
     whatPage: false,
     
   }
   }
   setCorrectAnswer() {
-    if (this.correctAnswer === -1){
-      const newGameAnswer = Math.floor(Math.Random()*100)+1
+      const newGameAnswer = Math.floor(Math.random()*100)+1
       this.setState({correctAnswer: newGameAnswer})
-    }
+   
   }
   handleAddGuess(guess){
     if (this.state.guessArray.length === 0) {
@@ -40,7 +39,7 @@ export default class Game extends React.Component {
     if (guess === correctAnswer) {
       this.setState({isHot: "YOU WIN! Click new game to play again"})
     }
-    else if(guess < correctAnswer + 10 && guess > correctAnswer -10){
+    else if(guess < (correctAnswer + 10) && guess > (correctAnswer -10)){
       this.setState({
         isHot: "Hot"
       })
@@ -60,7 +59,8 @@ export default class Game extends React.Component {
       <div>
         <Header toggleWhatPage={() => this.toggleWhatPage()}/>
         <GuessSection isHot={ (guess) => this.toggleHotCold(guess)} 
-        addGuess={ (guess) => this.handleAddGuess(guess)}/> 
+        addGuess={ (guess) => this.handleAddGuess(guess)}
+        hotColdValue={this.state.isHot}/> 
         <GuessCount count={this.state.guessArray.length} />
         <GuessList guesses={this.state.guessArray} />
       </div>
