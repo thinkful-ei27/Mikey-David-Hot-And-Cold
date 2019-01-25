@@ -4,12 +4,16 @@ import './guess-form.css';
 
 export default function GuessForm(props) {
    let number;
+    let clearform = ()=>
+    {document.getElementById("userGuess").reset()}
     return (
         <form onSubmit={(e) => {
             e.preventDefault();
             props.handleSubmit(number)
-        }}>
-            <input type="text" name="userGuess" id="userGuess"
+            clearform();
+            
+        }}id="userGuess">
+            <input type="text" name="userGuess" 
                 className="text" maxLength="3" autoComplete="off"
                 placeholder="Enter your Guess" required onChange={(e) => {
                 number = e.target.value}}/>

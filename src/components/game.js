@@ -13,7 +13,7 @@ export default class Game extends React.Component {
 
   this.state={
     guessArray:[],
-    isHot: "",
+    isHot: "Guess a number between 1 & 100",
     correctAnswer: -999999,
     whatPage: false,
     
@@ -25,10 +25,18 @@ export default class Game extends React.Component {
    
   }
   handleAddGuess(guess){
-    this.toggleHotCold(guess);
-    this.setState({
-      guessArray:[...this.state.guessArray, guess]
+      let stopGuess = false;
+    this.state.guessArray.find(oldguess => {
+        if(oldguess === guess){
+            alert('Enter a new guess!')
+            stopGuess = true;
+        }
     })
+      if(!stopGuess) {this.toggleHotCold(guess);
+             this.setState({
+              guessArray:[...this.state.guessArray, guess]
+        })}
+     
   }
 
   toggleHotCold(guess) {
@@ -61,10 +69,22 @@ export default class Game extends React.Component {
       this.setState({whatPage: notWhatPage}) 
    }
 
+   startNewGame(){
+     this.setState({
+        guessArray:[],
+        isHot: "Guess a number between 1 & 100",
+        correctAnswer: -999,
+        whatPage: false,
+      })
+        this.setCorrectAnswer()
+   }
+
     render(){
     return (
       <div>
-        <Header toggleWhatPage={() => this.toggleWhatPage()}/>
+        <Header toggleWhatPage={() => this.toggleWhatPage()}
+        newGame={() => this.startNewGame()}
+        whatPage={this.state.whatPage}/>
         <GuessSection isHot={ (guess) => this.toggleHotCold(guess)} 
         addGuess={ (guess) => this.handleAddGuess(guess)}
         hotColdValue={this.state.isHot}/> 

@@ -6,11 +6,17 @@ import InfoModal from './info-modal';
 import './header.css';
 
 export default function Header(props) {
-    return (
+    if(props.whatPage){return (
         <header>
-            <TopNav />
-            {/* <InfoModal /> */}
+            <TopNav newGame={props.newGame}
+             />
+             <InfoModal toggleWhatPage={props.toggleWhatPage} />
             <h1>HOT or COLD</h1>
         </header>
-    );
+    );}
+    return  <header>
+    <TopNav newGame={props.newGame}
+    toggleWhatPage={props.toggleWhatPage}/>
+    <h1>HOT or COLD</h1>
+</header>
 };
