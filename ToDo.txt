@@ -21,4 +21,4 @@ Answer varible (true/false)
 What Varible (true/false)
 ----------------------------------Game---------------------------------------
 --------Header--------GuessSection-----GuessCount--------GuessList-----------
--top-nav--------guessForm
+-top-nav--------guessForm  
