@@ -25,9 +25,6 @@ export default class Game extends React.Component {
    
   }
   handleAddGuess(guess){
-    if (this.state.guessArray.length === 0) {
-      this.setCorrectAnswer();
-    }
     this.toggleHotCold(guess);
     this.setState({
       guessArray:[...this.state.guessArray, guess]
@@ -35,25 +32,35 @@ export default class Game extends React.Component {
   }
 
   toggleHotCold(guess) {
-    const correctAnswer = this.state.correctAnswer;
-    if (guess === correctAnswer) {
-      this.setState({isHot: "YOU WIN! Click new game to play again"})
-    }
-    else if(guess < (correctAnswer + 10) && guess > (correctAnswer -10)){
+
+    if(guess < (this.state.correctAnswer + 10) && guess > (this.state.correctAnswer -10)){
       this.setState({
-        isHot: "Hot"
+       isHot: "Hot"
       })
-    } else { 
+    }  else { 
         this.setState({
-        isHot: "Cold"
+          isHot: "Cold"
         })
-      }
+     }
+     if (guess == this.state.correctAnswer) {
+      this.setState({
+        isHot: "You Win"
+      })
+  }
+    console.log(`BeforeChange :: Correct Answer: ${this.state.correctAnswer}, isHot: ${this.state.isHot}, Guess: ${guess}`)
+    // } else { 
+    //     this.setState({
+    //     isHot: "Cold"
+    //     })
+    //   }
+    // console.log(`AfterChange :: Correct Answer: ${this.state.correctAnswer}, isHot: ${this.state.isHot}, Guess: ${guess}`)
    }
 
    toggleWhatPage(){
       let notWhatPage = !(this.state.whatPage)
       this.setState({whatPage: notWhatPage}) 
    }
+
     render(){
     return (
       <div>
@@ -66,5 +73,8 @@ export default class Game extends React.Component {
       </div>
     );
    }
+  componentDidMount() { 
+    this.setCorrectAnswer()
+  }
 }
 
