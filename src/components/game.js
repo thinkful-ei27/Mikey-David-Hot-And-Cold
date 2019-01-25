@@ -8,56 +8,62 @@ import GuessList from './guess-list';
 //change count from state and pass to GuessCount
 //grab guesses from state and pass to GuessList
 export default class Game extends React.Component {
-   constructor(props){
-    super(props)
+  constructor(props){
+  super(props)
 
-    this.state={
-        guessArray:[],
-        isHot: null,
-        correctAnswer: null,
-        whatPage: false
+  this.state={
+    guessArray:[],
+    isHot: "",
+    correctAnswer: -1,
+    whatPage: false,
+    
+  }
+  }
+  setCorrectAnswer() {
+    if (this.correctAnswer === -1){
+      const newGameAnswer = Math.floor(Math.Random()*100)+1
+      this.setState({correctAnswer: newGameAnswer})
     }
+  }
+  handleAddGuess(guess){
+    if (this.state.guessArray.length === 0) {
+      this.setCorrectAnswer();
+    }
+    this.toggleHotCold(guess);
+    this.setState({
+      guessArray:[...this.state.guessArray, guess]
+    })
+  }
 
-   }
-   handleAddGuess(guess){
-       this.toggleHotCold(guess);
-       this.setState({
-        guessArray:[...this.state.guessArray, guess]
-       })
-   }
-
-   createCorrectAnswer(){
-    const newGameAnswer = Math.floor(Math.Random()*100)+1
-       this.setState({correctAnswer: newGameAnswer})
-   }
-
-   toggleHotCold(guess){
-      const correctAnswer = this.state.correctAnswer;
-      if(guess < correctAnswer + 10 && guess > correctAnswer -10){
-          this.setState({
-              isHot: true
-          })
-      } else { this.setState({
-          isHot: false
+  toggleHotCold(guess) {
+    const correctAnswer = this.state.correctAnswer;
+    if (guess === correctAnswer) {
+      this.setState({isHot: "YOU WIN! Click new game to play again"})
+    }
+    else if(guess < correctAnswer + 10 && guess > correctAnswer -10){
+      this.setState({
+        isHot: "Hot"
+      })
+    } else { 
+        this.setState({
+        isHot: "Cold"
         })
       }
    }
 
    toggleWhatPage(){
-        let notWhatPage = !(this.state.whatPage)
-         this.setState({whatPage: notWhatPage}) 
-       
+      let notWhatPage = !(this.state.whatPage)
+      this.setState({whatPage: notWhatPage}) 
    }
-   
-   
     render(){
     return (
-        <div>
-            <Header />
-            <GuessSection feedback="Make your guess!" /> 
-            <GuessCount count={3} />
-            <GuessList guesses={[10, 15, 25]} />
-        </div>
+      <div>
+        <Header toggleWhatPage={() => this.toggleWhatPage()}/>
+        <GuessSection isHot={ (guess) => this.toggleHotCold(guess)} 
+        addGuess={ (guess) => this.handleAddGuess(guess)}/> 
+        <GuessCount count={this.state.guessArray.length} />
+        <GuessList guesses={this.state.guessArray} />
+      </div>
     );
    }
 }
