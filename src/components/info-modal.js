@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './info-modal.css';
-
+//Wire info modal to What? (top-nav)
 export default function InfoModal(props) {
     return (
         <div className="overlay" id="modal">

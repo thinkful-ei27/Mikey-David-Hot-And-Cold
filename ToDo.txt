@@ -1,0 +1,24 @@
+ToDo List :
+-----------------------------------------------------------------------------
+In Game: 
+Add state to game
+change feedback to pass hot or cold (from state)
+change count from state and pass to GuessCount
+grab guesses from state and pass to GuessList
+Create a function to change state in Game
+in GuessForm pass guess to GuessSection, pass this number to Game function
+Pass guessCount count from state as prop in Game
+Pass guessList numbers array from state
+function to determine if hot or cold
+function to determine the answer
+function to change the What? varibles
+function to set state to nothing
+-----------------------------------------------------------------------------
+What is State? :
+Array of Guesses
+Hot or Cold Varible
+Answer varible (true/false)
+What Varible (true/false)
+----------------------------------Game---------------------------------------
+--------Header--------GuessSection-----GuessCount--------GuessList-----------
+-top-nav--------guessForm
